@@ -17,4 +17,6 @@ git clone https://github.com/finxol/sway-rice.git
 cp -r sway-rice/.config/* ~/.config/
 ```
 
+You can also copy the contents of .zshrc and .profiles but it will still work perfectly without 
+
 You can now reboot into sway and it should look nice
