@@ -4,6 +4,7 @@ Dotfiles are any files or directories starting with a "." in their name. They ar
 This is only a customisation from the dotfiles created by [zahimeen](https://github.com/zahimeen/dotfiles/tree/sway).
 
 ![Desktop](desktop.png)
+![Desktop](desktop2.png)
 
 ## Setup
 Install all the necessary packages
