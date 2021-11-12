@@ -87,6 +87,9 @@ exec $HOME/.azotebg
     bindsym $mod+4 workspace number 4
     bindsym $mod+5 workspace number 5
     bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
 
     # Move focused container to workspace
     bindsym $mod+Alt+1 move container to workspace number 1
@@ -95,6 +98,9 @@ exec $HOME/.azotebg
     bindsym $mod+Alt+4 move container to workspace number 4
     bindsym $mod+Alt+5 move container to workspace number 5
     bindsym $mod+Alt+6 move container to workspace number 6
+    bindsym $mod+Alt+7 move container to workspace number 7
+    bindsym $mod+Alt+8 move container to workspace number 8
+    bindsym $mod+Alt+9 move container to workspace number 9
 
 ## Layout stuff:
 
@@ -131,8 +137,8 @@ bindsym $mod+r mode "resize"
 bindsym XF86AudioMute        exec --no-startup-id "amixer -q set Master toggle"
 bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -q set Master 5%+ unmute"
 bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -q set Master 5%- unmute"
-# Media player controls
 
+# Media player controls
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
@@ -159,11 +165,36 @@ bar {
 
 include /etc/sway/config.d/*
 
+# Change keyboad layout
 input * xkb_layout "fr"
 input * xkb_numlock enable
 
+# Configure touchpad
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    tap_button_map lrm
+}
+
+# Set monitors and workspaces for monitors
 output HDMI-A-1 pos 0 0
 output eDP-1 pos 0 1080
 
 workspace 1 output HDMI-A-1
 workspace 2 output eDP-1
+
+# Set Cursor theme
+set $my_cursor Qogir
+set $my_cursor_size 18
+
+seat seat0 xcursor_theme $my_cursor $my_cursor_size
+exec_always {
+    gsettings set org.gnome.desktop.interface cursor-theme $my_cursor
+    gsettings set org.gnome.desktop.interface cursor-size $my_cursor_size
+}
+
+# Set wallpaper
+output "*" bg /home/finxol/Pictures/Wallpapers/XeroLinux.png fill
+
+# Auto start ElectronMail
+exec flatpak run com.github.vladimiry.ElectronMail
