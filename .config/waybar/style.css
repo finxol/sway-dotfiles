@@ -88,20 +88,17 @@ label:focus {
 
 #workspaces button {
     padding: 5px 5px;
-    background-color: transparent;
-    border-radius: 10px;
     margin-left: 1px;
     color: #c8ccd4;
+    border: 2px solid transparent;
 }
 
 #workspaces button:hover {
-    background-color: #c8ccd4;
-    color: #1f2227;
+    border-bottom: 2px solid #c8ccd4;
 }
 
 #workspaces button.focused {
-    background-color: #e06c75;
-    color: #282c34;
+    border-bottom: 2px solid #e06c75;
 }
 
 #workspaces button.urgent {
@@ -145,12 +142,6 @@ label:focus {
 
 #battery {
     color: #e06c75;
-}
-
-#battery.charging,
-#battery.plugged {
-    color: #e06c75;
-    background-color: #c8ccd4;
 }
 
 #battery.critical:not(.charging) {

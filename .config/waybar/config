@@ -115,8 +115,11 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}  {capacity}%",
-        "format-icons": [" ", " ", " ", " ", " "]
+        "format": "{icon} {capacity}%",
+        "format-icons": {
+	    "default": [" ", " ", " ", " ", " "],
+	    "charging": "⚡"
+	}
     },
     "clock": {
         "interval": 1,
