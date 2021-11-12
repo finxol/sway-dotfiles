@@ -67,7 +67,8 @@ label:focus {
 #tray,
 #mode,
 #idle_inhibitor,
-#mpd {
+#mpd,
+#bluetooth {
     padding: 0 10px;
     margin: 4px 4px 4px 4px;
     color: #1f2227;
@@ -107,6 +108,20 @@ label:focus {
     background-color: #e04753;
 }
 
+#custom-media {
+    background-color: #66cc99;
+    color: #2a5c45;
+    min-width: 100px;
+}
+
+#custom-media.custom-spotify {
+    background-color: #66cc99;
+}
+
+#custom-media.custom-vlc {
+    background-color: #ffa000;
+}
+
 #pulseaudio {
     color: #e06c75;
 }
@@ -114,6 +129,10 @@ label:focus {
 #pulseaudio.muted {
     background-color: #81a1c1;
     color: #282c34;
+}
+
+#bluetooth {
+    color: #56b6c2;
 }
 
 #backlight {
@@ -131,6 +150,7 @@ label:focus {
 #battery.charging,
 #battery.plugged {
     color: #e06c75;
+    background-color: #c8ccd4;
 }
 
 #battery.critical:not(.charging) {
@@ -140,6 +160,23 @@ label:focus {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+}
+
+
+#cpu {
+    color: #2ecc71;
+}
+
+#memory {
+    color: #9b59b6;
+}
+
+#temperature {
+    color: #f0932b;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
 }
 
 #clock {
