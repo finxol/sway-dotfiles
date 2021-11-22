@@ -115,12 +115,12 @@ exec $HOME/.azotebg
 
 ## Scratchpad:
 
-    bindsym $mod+Shift+minus move scratchpad
-    bindsym $mod+minus scratchpad show
+#    bindsym $mod+Shift+minus move scratchpad
+#    bindsym $mod+minus scratchpad show
 
 
 
-    bindsym $mod+p exec grim
+#    bindsym $mod+p exec grim
 
 mode "resize" {
     bindsym $left resize grow width 10px
@@ -145,8 +145,24 @@ bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id ~/.i3/scripts/setbrightness.sh 1
-bindsym XF86MonBrightnessDown exec --no-startup-id ~/.i3/scripts/setbrightness.sh 0
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+
+# Take a fullscreen screenshot
+bindsym $mod+p exec grim -t png ~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png
+
+# Lock screen
+bindsym $mod+l exec swaylock -c 1f2227 -i ~/.config/i3/padlock.png --scaling=center
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+f floating toggle
+
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym $mod+h splith
+bindsym $mod+v splitv
+
 
 ################################################################################
 ###  GET GTK WORKING IN SWAY
@@ -177,10 +193,10 @@ input type:touchpad {
 }
 
 # Set monitors and workspaces for monitors
-output HDMI-A-1 pos 0 0
+output DP-1 pos 0 0 res 1920x1080@74.986Hz
 output eDP-1 pos 0 1080
 
-workspace 1 output HDMI-A-1
+workspace 1 output DP-1
 workspace 2 output eDP-1
 
 # Set Cursor theme

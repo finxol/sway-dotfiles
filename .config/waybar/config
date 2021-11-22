@@ -1,6 +1,6 @@
 {
-    "modules-left": ["custom/launch", "sway/workspaces"],
-    "modules-center": ["custom/media"],
+    "modules-left": ["custom/launch", "sway/workspaces", "sway/window"],
+    "modules-center": ["clock"],
     "modules-right": [
 		"pulseaudio",
 		"bluetooth",
@@ -8,9 +8,8 @@
 		"network",
 		"cpu",
 		"memory",
-		"temperature",
+		"custom/temp",
 		"battery",
-		"clock",
 		"custom/off"
     ],
     "custom/launch": {
@@ -44,17 +43,8 @@
             "default": " "
         }
     },
-    "custom/media": {
-        "format": "{icon} {}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
-        "escape": true,
-        "exec": "$HOME/.config/waybar/media-media.py" // Script in resources folder
-        // "exec": "$HOME/.config/waybar/media-media.py --player spotify 2> /dev/null" // Filter player based on name
+    "sway/windows": {
+	"max-length": 30
     },
     "pulseaudio": {
         "scroll-step": 5,
@@ -103,11 +93,11 @@
     "memory": {
         "format": "{}% "
     },
-    "temperature": {
-        "critical-threshold": 65,
-        "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "⚠️"]
+    "custom/temp": {
+	"exec": "/home/finxol/.config/waybar/temperature.py",
+        "format": "{}°C {icon}",
+        "format-icons": [""],
+	"interval": 10
     },
     "battery": {
         "interval": 60,
@@ -123,8 +113,7 @@
     },
     "clock": {
         "interval": 1,
-        "format": "  {:%H:%M}",
-        "format-alt": "  {:%b %d, %G}"
+        "format": "  {:%a, %d %b     %H:%M}"
     },
     "custom/off": {
         "format": " ",

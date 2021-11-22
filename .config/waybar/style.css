@@ -98,6 +98,7 @@ label:focus {
 }
 
 #workspaces button.focused {
+    background-color: rgba(200, 204, 212, 0.1);
     border-bottom: 2px solid #e06c75;
 }
 
