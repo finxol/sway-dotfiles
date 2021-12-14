@@ -68,9 +68,9 @@ ZSH_THEME="gallifrey"
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(git zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
+# Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,20 +99,17 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vi="nvim"
-alias rg="ranger"
 
-# Upgrade everything
-alias upgrade="sudo dnf upgrade && flatpak upgrade && sudo snap refresh"
 
-# Additional path for Cargo scripts
-export PATH=$PATH:/home/finxol/.cargo/bin
+
+# Add plugins
+# /home/finxol/.zsh_plugins
+
+
 
 # Use user scripts
 export PATH=$PATH:/home/finxol/.local/bin:/home/finxol/.cargo/bin
 
-# Open settings
-alias settings="gnome-control-center"
 
 # Exa aliases
 alias ll="exa -la --icons"
@@ -127,7 +124,10 @@ autoload -U colors && colors
 setopt prompt_subst
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#555555"
 
-# Connect to Home network via wireguard
+# Upgrade all packages on Fedora
+alias upgrade="sudo dnf upgrade ; flatpak upgrade ; sudo snap refresh"
+
+# Connect to vpn via wireguard
 wireguard () {
     if [ $1 = 'list' ]
     then
@@ -150,9 +150,6 @@ mkcd () {
 
 # Speedtest
 alias speed="speedtest-cli --simple"
-
-# SSH into linode server
-alias linode="ssh 192.46.233.100"
 
 # Alias Please instead of sudo
 alias please="sudo"
@@ -185,5 +182,11 @@ ex ()
 # Connect to Bluetooth speaker
 alias boom="bluetooth on && bluetoothctl connect C4:30:18:9C:93:E8"
 
+# Easily do calculation
+calc()
+{
+	python -c "print($1)"
+}
 
-clear
+# Start Oracle SQL docker
+alias oracle="sudo docker run -d -p 1521:1521 -e ORACLE_PASSWORD=password gvenzl/oracle-xe"
