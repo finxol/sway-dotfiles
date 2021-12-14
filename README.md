@@ -3,6 +3,9 @@ Dotfiles are any files or directories starting with a "." in their name. They ar
 
 This is only a customisation from the dotfiles created by [zahimeen](https://github.com/zahimeen/dotfiles/tree/sway).
 
+This whole repo is set under public domain thanks to the Unlicense.
+Please feel free to copy and/or modify these files to your liking.
+
 ![Desktop](desktop.png)
 ![Desktop](desktop2.png)
 
