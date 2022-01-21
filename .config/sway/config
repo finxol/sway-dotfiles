@@ -211,9 +211,3 @@ exec_always {
     gsettings set org.gnome.desktop.interface cursor-theme $my_cursor
     gsettings set org.gnome.desktop.interface cursor-size $my_cursor_size
 }
-
-# Set wallpaper
-output "*" bg /home/finxol/Pictures/Wallpapers/XeroLinux.png fill
-
-# Auto start ElectronMail
-exec flatpak run com.github.vladimiry.ElectronMail
