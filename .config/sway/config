@@ -7,7 +7,7 @@ set $term alacritty
 set $file_man nautilus
 set $menu rofi -show drun -run-shell-command 'zsh -e zsh -ic "{cmd} && read"'
 set $browser flatpak run io.gitlab.librewolf-community
-set $alt_browser chromium-browser-privacy
+set $alt_browser flatpak run com.github.Eloston.UngoogledChromium
 set $audio_man pavucontrol
 set $email_client evolution
 
@@ -37,14 +37,14 @@ client.urgent           #e06c75 #e06c75 #e06c75 #e06c75 #e06c75
 client.unfocused        #282c34 #282c34 #282c34 #282c34 #282c34
 
 gaps inner 1
-gaps outer 1
+gaps outer 0
 
 exec $HOME/.azotebg
 
 ################################################################################
 ###  KEYBINDINGS
 ################################################################################
-    
+
 ## Applications:
 
     bindsym $mod+Return exec $term
@@ -102,6 +102,9 @@ exec $HOME/.azotebg
     bindsym $mod+Alt+8 move container to workspace number 8
     bindsym $mod+Alt+9 move container to workspace number 9
 
+    # Switch back to previous workspace
+    bindsym $mod+Tab workspace back_and_forth
+
 ## Layout stuff:
 
     # Switch layout style of current container
@@ -152,16 +155,13 @@ bindsym XF86MonBrightnessDown exec light -U 5
 bindsym $mod+Print exec grim -t png ~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png
 
 # Take a Screenshot with the region select
-bindsym $mod+p exec grim -t png -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png
+bindsym $mod+p exec grim -g "$(slurp)" "$HOME/Pictures/$(date +%Y-%m-%d_%H-%m-%s).png"
 
 # Lock screen
 bindsym $mod+l exec swaylock -c 1f2227 -i ~/.config/i3/padlock.png --scaling=center
 
-# Toggle the current focus between tiling and floating mode
-bindsym $mod+Shift+f floating toggle
-
 # You can "split" the current object of your focus with
-# $mod+b or $mod+v, for horizontal and vertical splits
+# $mod+v or $mod+h, for horizontal and vertical splits
 # respectively.
 bindsym $mod+h splith
 bindsym $mod+v splitv
@@ -179,7 +179,6 @@ exec_always import-gsettings
 
 bar {
         swaybar_command waybar
-    }
 }
 
 include /etc/sway/config.d/*
@@ -205,9 +204,3 @@ workspace 2 output eDP-1
 # Set Cursor theme
 set $my_cursor Qogir
 set $my_cursor_size 18
-
-seat seat0 xcursor_theme $my_cursor $my_cursor_size
-exec_always {
-    gsettings set org.gnome.desktop.interface cursor-theme $my_cursor
-    gsettings set org.gnome.desktop.interface cursor-size $my_cursor_size
-}
