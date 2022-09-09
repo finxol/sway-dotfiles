@@ -21,10 +21,6 @@ set $right right
 ################################################################################
 
 workspace 1
-exec $browser
-workspace 2
-exec $term
-workspace 1
 
 ################################################################################
 ###  STYLING
@@ -152,13 +148,13 @@ bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
 # Take a fullscreen screenshot
-bindsym $mod+Print exec grim -t png ~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png
+bindsym $mod+Print exec grim -t png "~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png"
 
 # Take a Screenshot with the region select
-bindsym $mod+p exec grim -g "$(slurp)" "$HOME/Pictures/$(date +%Y-%m-%d_%H-%m-%s).png"
+bindsym $mod+p exec grim -g "$(slurp)" "$HOME/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png"
 
 # Lock screen
-bindsym $mod+l exec swaylock -c 1f2227 -i ~/.config/i3/padlock.png --scaling=center
+bindsym $mod+l exec swaylock -c 1f2227
 
 # You can "split" the current object of your focus with
 # $mod+v or $mod+h, for horizontal and vertical splits
@@ -195,7 +191,7 @@ input type:touchpad {
 }
 
 # Set monitors and workspaces for monitors
-output DP-1 pos 0 0 res 1920x1080@74.986Hz
+output DP-1 pos 0 0 res 1920x1080@60.003Hz
 output eDP-1 pos 0 1080
 
 workspace 1 output DP-1

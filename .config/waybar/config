@@ -62,17 +62,6 @@
         },
         "on-click": "pavucontrol"
     },
-    "bluetooth": {
-        "format": "  {icon}",
-        "format-alt": "  {icon}",
-        "interval": 30,
-        "format-icons": {
-            "enabled": "",
-            "disabled": ""
-        },
-        "tooltip-format": " {} ",
-        "on-click": "bluetooth toggle"
-    },
     "backlight": {
         "device": "intel_backlight",
         "format": "  {percent}%",

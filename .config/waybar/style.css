@@ -25,6 +25,7 @@ white:   '#c8ccd4'
 }
 
 window#waybar {
+	min-height: 25rem;
     background-color: #1f2227;
     background: transparent;
     color: #c8ccd4;
