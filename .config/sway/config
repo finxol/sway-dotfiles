@@ -197,6 +197,12 @@ output eDP-1 pos 0 1080
 workspace 1 output DP-1
 workspace 2 output eDP-1
 
+# Autostart Applications
+exec "/usr/lib/protonmail/bridge/proton-bridge-launcher" "--no-window"
+
+# Turn off bluetooth by default
+exec bluetooth off
+
 # Set Cursor theme
 set $my_cursor Qogir
 set $my_cursor_size 18

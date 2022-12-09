@@ -1,111 +1,182 @@
+// =============================================================================
+//
+// Waybar configuration
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
+
 {
-    "modules-left": ["custom/launch", "sway/workspaces", "sway/window"],
-    "modules-center": ["clock"],
-    "modules-right": [
-		"pulseaudio",
-		"bluetooth",
-		"backlight",
-		"network",
-		"cpu",
-		"memory",
-		"custom/temp",
-		"battery",
-		"custom/off"
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
+
+    "layer": "bottom",
+
+    "position": "top",
+
+    // If height property would be not present, it'd be calculated dynamically
+    "height": 32,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "sway/window"
     ],
-    "custom/launch": {
-        "format": " ",
-        "on-click": "rofi -show run"
-    },
-    "sway/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "format": " {icon} ",
-        "persistent_workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": []
-        },
-        "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-	    "7": "7",
-	    "8": "8",
-	    "9": "9",
-            "urgent": " ",
-            "focused": " ",
-            "default": " "
-        }
-    },
-    "sway/windows": {
-	"max-length": 30
-    },
-    "pulseaudio": {
-        "scroll-step": 5,
-        "format": "{icon} {volume}%",
-        "format-bluetooth": " {format_source} {icon} {volume}%",
-        "format-bluetooth-muted": "{icon} muted",
-        "format-muted": "muted",
-        "format-icons": {
-	    "hands-free": [" ", " ", " "],
-            "headset": [" ", " ", " "],
-            "phone": [" ", " ", " "],
-            "portable": [" ", " ", " "],
-            "car": [" ", " ", " "],
-            "headphone": [" ", " ", " "]
-        },
-        "on-click": "pavucontrol"
-    },
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "network",
+        // "idle_inhibitor",
+        "memory",
+        "cpu",
+        "custom/temp",
+        // "custom/keyboard-layout",
+        "backlight",
+        "pulseaudio",
+        "battery",
+        "tray"
+    ],
+
+
+    // -------------------------------------------------------------------------
+    // Modules
+    // -------------------------------------------------------------------------
+
     "backlight": {
-        "device": "intel_backlight",
-        "format": "  {percent}%",
-        "on-scroll-up": "light -A 5",
-        "on-scroll-down": "light -U 5"
+        "format": " {percent}%",
+        "interval": 2,
+        "on-scroll-up": "brightnessctl set +2%",
+        "on-scroll-down": "brightnessctl set 2%-"
     },
-    "network": {
-        "format-wifi": "  {essid}: {ipaddr}/{cidr}",
-        "format-ethernet": "Ethernet: {ipaddr}/{cidr}",
-        "format-linked": "{ifname} (No IP)",
-        "format-disconnected": "Disconnected",
-	"on-click": "wifi toggle"
-    },
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "{}% "
-    },
-    "custom/temp": {
-	"exec": "/home/finxol/.config/waybar/temperature.py",
-        "format": "{}°C {icon}",
-        "format-icons": [""],
-	"interval": 10
-    },
+
     "battery": {
-        "interval": 60,
+        "interval": 10,
         "states": {
-            "warning": 30,
+            "warning": 25,
             "critical": 15
         },
-        "format": "{icon} {capacity}%",
-        "format-icons": {
-	    "default": [" ", " ", " ", " ", " "],
-	    "charging": "⚡"
-	}
+        // Connected to AC
+        "format": " {icon} {capacity}%", // Icon: bolt
+        // Not connected to AC
+        "format-discharging": "{icon} {capacity}%",
+        "format-icons": [
+            "", // Icon: battery-full
+            "", // Icon: battery-three-quarters
+            "", // Icon: battery-half
+            "", // Icon: battery-quarter
+            ""  // Icon: battery-empty
+        ],
+        "tooltip": true
     },
-    "clock": {
+	"clock": {
         "interval": 1,
         "format": "  {:%a, %d %b     %H:%M}"
+	},
+
+    "cpu": {
+        "interval": 3,
+        "format": " {usage}% ({load})", // Icon: microchip
+        "states": {
+          "warning": 70,
+          "critical": 90
+        },
     },
-    "custom/off": {
-        "format": " ",
-        "on-click": "swaymsg exit"
+
+    "custom/keyboard-layout": {
+      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4 | cut -d ' ' -f1",
+      // Interval set only as a fallback, as the value is updated by signal
+      "interval": 10,
+      "format": " {}", // Icon: keyboard
+      // Signal sent by Sway key binding (~/.config/sway/key-bindings)
+      "signal": 1, // SIGHUP
+      "tooltip": false,
+      "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+      "on-scroll-up": "swaymsg input type:keyboard xkb_switch_layout next",
+      "on-scroll-down": "swaymsg input type:keyboard xkb_switch_layout prev",
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": "",
+        },
+    },
+
+    "memory": {
+        "interval": 3,
+        "format": " {}%", // Icon: memory
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "network": {
+        "interval": 3,
+        "format-wifi": " {essid}", // Icon: wifi
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
+        "format-disconnected": "⚠  Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr} (signal: {signalStrength}%)"
+    },
+
+    "pulseaudio": {
+        "scroll-step": 2,
+        "format": "{icon} {volume}%",
+        "format-muted": " Muted", // Icon: volume-mute
+        "format-icons": {
+            "headphones": "", // Icon: headphones
+            "handsfree": "", // Icon: headset
+            "headset": "", // Icon: headset
+            "phone": "", // Icon: phone
+            "portable": "", // Icon: phone
+            "car": "", // Icon: car
+            "default": ["", ""] // Icons: volume-down, volume-up
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "alacritty --title='Sound Mixer' --command='pulsemixer'",
+        "tooltip": true
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\"> {}</span>", // Icon: expand-arrows-alt
+        "tooltip": false
+    },
+
+    "sway/window": {
+        "format": "{}",
+        "max-length": 120
+    },
+
+    "sway/workspaces": {
+        "all-outputs": false,
+        "disable-scroll": true,
+        "format": "{icon} {name}",
+        "format-icons": {
+            "1:WWW": "", // Icon: firefox-browser
+            "2:Editor": "", // Icon: code
+            "3:Terminals": "", // Icon: terminal
+            "4:Mail": "", // Icon: mail
+            "8:Documents": "", // Icon: book
+            "9:Multimedia": "", // Icon: music
+            "10:Torrent": "", // Icon: cloud-download-alt
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+	"custom/temp": {
+		"exec": "/home/finxol/.config/waybar/temperature.py",
+        "format": "{}°C {icon}",
+        "format-icons": [""],
+		"interval": 10
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
     }
+
 }

@@ -108,16 +108,15 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Use user scripts
-export PATH=$PATH:/home/finxol/.local/bin:/home/finxol/.cargo/bin
+export PATH="$PATH:/home/finxol/.local/bin:/home/finxol/Flutter/bin:/home/finxol/Android/Sdk/cmdline-tools/bin:/home/finxol/Android/Sdk/platform-tools"
+export CHROME_EXECUTABLE="/home/finxol/.local/bin/ungoogled-chromium.sh"
+
+# Use rustup & cargo
+. "$HOME/.cargo/env"
 
 
 # Exa aliases
-alias ll="exa -la --icons"
-
-# Render markdown files in terminal
-function md() {
-	cat $1 | mdvl
-}
+alias ll="exa -la --icons --group-directories-first --git"
 
 # Change appearance
 autoload -U colors && colors
@@ -125,15 +124,15 @@ setopt prompt_subst
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#555555"
 
 # Upgrade all packages on Fedora
-alias upgrade="sudo dnf upgrade ; flatpak upgrade ; sudo snap refresh"
+alias upgrade="sudo dnf upgrade ; flatpak upgrade ; sudo snap refresh ; rustup update"
 
-# Connect to vpn via wireguard
+# Connect to Home network via wireguard
 wireguard () {
-    if [ $1 = 'list' ]
+    if [ "$1" = 'list' ]
     then
           sudo ls /etc/wireguard
-       else
-       sudo wg-quick $2 $1
+    else
+       sudo wg-quick "$2" "$1"
     fi
     echo "Current IP: $(curl -s https://am.i.mullvad.net/ip)"
 }
@@ -148,11 +147,11 @@ mkcd () {
 	mkdir $1 && cd $1
 }
 
-# Speedtest
-alias speed="speedtest-cli --simple"
-
-# Alias Please instead of sudo
-alias please="sudo"
+# Force kill a program
+stop()
+{
+	sudo kill $(ps -ef | grep -w  "$1" | tr -s ' ' | cut -d ' ' -f2)
+}
 
 ex ()
 {
@@ -179,9 +178,6 @@ ex ()
     fi
 }
 
-# Connect to Bluetooth speaker
-alias boom="bluetooth on && bluetoothctl connect C4:30:18:9C:93:E8"
-
 # Easily do calculation
 calc()
 {
@@ -189,4 +185,26 @@ calc()
 }
 
 # Start Oracle SQL docker
-alias oracle="sudo docker run -d -p 1521:1521 -e ORACLE_PASSWORD=password gvenzl/oracle-xe"
+oracle()
+{
+	if [ "$(podman ps | grep "oraclesql" | wc --lines)" -eq 1 ]; then
+		echo "[+] Stropping Oracle SQL..."
+		podman kill oraclesql && podman container rm oraclesql
+	else
+		echo "[+] Strarting Oracle SQL..."
+		podman run -d --name oraclesql -p 1521:1521 -e ORACLE_PASSWORD=password gvenzl/oracle-xe:11
+	fi
+}
+
+# Play a guitar chord
+alias chord="play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1"
+
+# keep history scrollable
+alias c="clear -x"
+
+# Open vim buffers in tabs by default
+alias vim="vim -p"
+
+# Exit terminal like vim
+alias q="exit"
+alias :q="exit"
